@@ -1,11 +1,12 @@
 import express from "express";
 
-import { createEvent } from "../controllers/EventController.js";
+import { createEvent, getAllEvents } from "../controllers/EventController.js";
 
 const router = express.Router();
 
 router.get("/", async(req, res) => {
-  res.status(200).send("hello event");
+  const events = await getAllEvents();
+  res.status(200).json(events);
 })
 
 router.post('/', async (req, res) => {

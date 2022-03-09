@@ -1,6 +1,8 @@
 import express from "express";
-import { connectToDB } from "./config/db.js";
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
+
+import { connectToDB } from "./config/db.js";
 import EventRouter from "./routes/Event.js";
 
 // use environment variables
@@ -10,6 +12,10 @@ dotenv.config();
 connectToDB();
 
 const app = express();
+
+// accept json formats
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 // register application routes
 app.use("/event", EventRouter);
