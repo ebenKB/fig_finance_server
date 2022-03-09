@@ -1,3 +1,5 @@
+## Installing packages
+Run ```npm install``` to install all packages
 ## Starting the application
 
 You can start the application by running 
