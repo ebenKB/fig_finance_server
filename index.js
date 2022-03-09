@@ -1,7 +1,7 @@
 import express from "express";
 import { connectToDB } from "./config/db.js";
 import dotenv from "dotenv";
-import { createEvent } from "./services/EventService.js";
+import EventRouter from "./routes/Event.js";
 
 // use environment variables
 dotenv.config();
@@ -11,21 +11,8 @@ connectToDB();
 
 const app = express();
 
-app.get('/', async (req, res) => {
-  try {
-    const created = await createEvent({
-      title: "Some title 2",
-      description: "Some description is here",
-      category: "Machine learning",
-      isVirtual: true,
-      address: "Ghana, Accra",
-    })
-    console.log("Created", created);
-  } catch (error) {
-    
-  }
-  res.send('App is live')
-})
+// register application routes
+app.use("/event", EventRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`App is running on port ${PORT}`));
