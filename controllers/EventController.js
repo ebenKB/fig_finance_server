@@ -5,11 +5,27 @@ export const createEvent = async (event) => {
 }
 
 export const getAllEvents = async (page=1, limit=10) => {
-  const SKIP = (page - 1) * limit;
-  return await Event.find()
-    .skip(SKIP)
-    .limit(limit)
-    .sort({_id: 1})
+  // check if limit and page are valid
+  if(limit && page && limit <= Number.MAX_SAFE_INTEGER && page <= Number.MAX_SAFE_INTEGER ) {
+    const SKIP = (page - 1) * limit;
+    const events = await Event.find()
+      .skip(SKIP)
+      .limit(limit)
+      .sort({_id: 1});
+    
+    const count = await Event.countDocuments();
+  
+    // check meta data for pagination
+    const meta = {
+      total: count,
+      page,
+      limit
+    }
+
+    return { events, meta, };
+  } else {
+    throw new Error("Limit or Page is not valid")
+  }
 };
 
 export const searchEvents = async ({search="", page, limit}) => {
