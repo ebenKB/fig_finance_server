@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
   try {
     const created = await createEvent(req.body);
     
-    res.status(201).send(created);
+    res.status(201).json(created);
   } catch (error) {
     logger.log("error", error.message)
     res.status(500).send("An error occurred while creating an event")
