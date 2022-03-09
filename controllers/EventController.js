@@ -11,7 +11,7 @@ export const getAllEvents = async (page=1, limit=10) => {
     const events = await Event.find()
       .skip(SKIP)
       .limit(limit)
-      .sort({_id: 1});
+      .sort({date: -1});
     
     const count = await Event.countDocuments();
   
