@@ -34,7 +34,12 @@ router.post('/', async (req, res) => {
     res.status(201).json(created);
   } catch (error) {
     logger.log("error", error.message)
-    res.status(500).send("An error occurred while creating an event")
+
+    // catch validation errors
+    if(error.name === "ValidationError") {
+      return res.status(400).json({error: error.message});
+    }
+    res.status(500).json({error: "An error occurred while creating an event"})
   }
 })
 
